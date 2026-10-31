@@ -1,0 +1,1 @@
+Đặt ảnh 001.jpg, 002.jpg... vào thư mục này. Có thể dùng default.jpg cho khách chưa có ảnh.

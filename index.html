@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danh thiếp NFC</title>
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#f4f7fb,#e9eef6);
+    color:#222;min-height:100vh;
+}
+.container{width:100%;max-width:430px;margin:auto;padding:35px 20px 40px;text-align:center}
+.avatar{
+    width:110px;height:110px;margin:0 auto 16px;border-radius:50%;
+    overflow:hidden;background:#fff;box-shadow:0 8px 25px rgba(0,0,0,.13);
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+h1{margin:8px 0 6px;font-size:27px}
+.desc{margin:0 0 25px;color:#666;font-size:15px}
+.social-link{
+    display:flex;align-items:center;width:100%;min-height:64px;margin:14px 0;
+    padding:12px 18px;background:rgba(255,255,255,.96);border-radius:17px;
+    text-decoration:none;color:#222;box-shadow:0 5px 18px rgba(0,0,0,.08);
+    transition:.2s;
+}
+.social-link:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.13)}
+.social-link:active{transform:scale(.97)}
+.icon{width:38px;height:38px;object-fit:contain;margin-right:16px;flex-shrink:0}
+.link-text{flex:1;text-align:left;font-size:17px;font-weight:600}
+.arrow{font-size:22px;color:#999}
+.footer{margin-top:30px;font-size:12px;color:#999}
+.error{padding:30px 10px}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+
+<script src="data.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const id = params.get("id") || "001";
+const person = NFC_DATA[id];
+
+const app = document.getElementById("app");
+
+if (!person) {
+    app.innerHTML = `
+        <div class="error">
+            <h1>Không tìm thấy thẻ</h1>
+            <p>Mã thẻ <b>${id}</b> chưa được tạo.</p>
+        </div>`;
+} else {
+    document.title = person.name + " - Liên hệ";
+
+    const links = [];
+
+    if (person.facebook) links.push(`
+        <a class="social-link" href="${person.facebook}" target="_blank" rel="noopener noreferrer">
+            <img class="icon" src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook">
+            <span class="link-text">Facebook</span><span class="arrow">›</span>
+        </a>`);
+
+    if (person.tiktok) links.push(`
+        <a class="social-link" href="${person.tiktok}" target="_blank" rel="noopener noreferrer">
+            <img class="icon" src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok">
+            <span class="link-text">TikTok</span><span class="arrow">›</span>
+        </a>`);
+
+    if (person.zalo) links.push(`
+        <a class="social-link" href="${person.zalo}" target="_blank" rel="noopener noreferrer">
+            <img class="icon" src="https://cdn.simpleicons.org/zalo/0068FF" alt="Zalo">
+            <span class="link-text">Zalo</span><span class="arrow">›</span>
+        </a>`);
+
+    if (person.phone) links.push(`
+        <a class="social-link" href="tel:${person.phone}">
+            <img class="icon" src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Điện thoại">
+            <span class="link-text">Gọi điện: ${person.phone}</span><span class="arrow">›</span>
+        </a>`);
+
+    app.innerHTML = `
+        <div class="avatar">
+            <img src="${person.avatar}" alt="${person.name}">
+        </div>
+        <h1>${person.name}</h1>
+        <p class="desc">${person.description || "Kết nối với tôi"}</p>
+        ${links.join("")}
+        <div class="footer">Chạm NFC để kết nối</div>
+    `;
+}
+</script>
+</body>
+</html>
