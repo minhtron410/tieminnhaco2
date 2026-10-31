@@ -1,12 +1,11 @@
 const NFC_DATA = {
-    "001": {
-        name: "Mai Minh Trọng",
+    "chu-manh-huan": {
+        name: "Chu Mạnh Huấn",
         description: "Kết nối với tôi",
         avatar: "avatar/001.jpg",
-        facebook: "https://www.facebook.com/share/1Fj5kZryfZ/",
-        tiktok: "https://www.tiktok.com/@maiminhtrong410",
-        zalo: "https://zalo.me/0392474883",
-        phone: "0382474883"
+        facebook: "https://www.facebook.com/manhhuan8",
+        zalo: "https://zalo.me/0368898088",
+        phone: "0368898088"
     },
 
     "002": {
